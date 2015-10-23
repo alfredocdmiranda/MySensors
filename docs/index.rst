@@ -9,6 +9,9 @@ MySensors is a library built focusing on Arduino platform to make home automatio
 easier. There is a set of third-party libraries which complements the whole
 library.
 
+If you don't find what you want in this page, you always can go to the `MySensors' official
+website <http://www.mysensors.org/>`_ and its `Forum <http://forum.mysensors.org/>`_
+
 Contents:
 
 .. toctree::
@@ -18,4 +21,6 @@ Contents:
    hardware
    bootloader
    protocol
+   controllers
+   nodes
 
