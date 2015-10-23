@@ -10,7 +10,7 @@ All commands ends with a newline. The serial commands has the following format:
     <node-id>;<child-sensor-id>;<message-type>;<ack>;<sub-type>;<payload>\n
 
 Message Structure Elements
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+**************************
 
 ================  =======================================================================================================================
 Message Part      Description
@@ -32,7 +32,7 @@ payload           The payload holds the message coming in from sensors or instru
     The NRF24L01+ has a maximum of 32 bytes. The MySensors library (version 1.5) uses 7 bytes for the message header.
 
 Message Types
-^^^^^^^^^^^^^
+*************
 
 ============= ===== ====================================================
 Type	      Value	Comment
@@ -44,8 +44,11 @@ internal	  3     This is a special internal message. See table below for the det
 stream	      4     Used for OTA firmware updates.
 ============= ===== ====================================================
 
-Message Sub-type: Presentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Message Sub-types
+*****************
+
+Presentation
+------------
 
 When a presentation message is sent from a sensor, sub-type can one the following:
 
@@ -95,8 +98,8 @@ S_MOISTURE                35     Moisture sensor                           V_LEV
 =======================   ====== ========================================= ====================
 
 
-Message Sub-type: Set & Req
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Set & Req
+---------
 
 When a set or request message is being sent, the sub-type has to be one of the following:
 
@@ -173,8 +176,8 @@ V_HVAC_FLOW_MODE          46     | Flow mode for HVAC                      S_HVA
                                  | ("Auto", "ContinuousOn", "PeriodicOn")
 =======================   ====== ========================================= ====================
 
-Message Sub-type: Internal
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Internal
+--------
 
 The internal messages are used for different tasks in the communication between sensors, the gateway to controller and between sensors and the gateway.
 
@@ -203,8 +206,8 @@ I_GET_NONCE               16     Used between sensors when requesting nonce.
 I_GET_NONCE_RESPONSE      17     Used between sensors for nonce response.
 =======================   ====== =========================================
 
-Message Sub-type: Stream
-^^^^^^^^^^^^^^^^^^^^^^^^
+Stream
+------
 
 =======================   ====== =========================================
 Type	                  Value  Comment	                              
@@ -213,7 +216,7 @@ I_BATTERY_LEVEL           0      Use this to report the battery level (in percen
 =======================   ====== =========================================
 
 Examples
-^^^^^^^^
+********
 
 Received message from radio network from one of the sensors: Incoming presentation
 message from node 12 with child sensor 6. The presentation is for a binary
