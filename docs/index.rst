@@ -1,22 +1,21 @@
-.. MySensors documentation master file, created by
-   sphinx-quickstart on Fri Oct 23 05:56:46 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+MySensors
+==========
 
-Welcome to MySensors's documentation!
-=====================================
+Welcome to MySensors' unofficial documentation. We are trying to gather
+relevant information and API documentation which will help new users and
+developers.
+
+MySensors is a library built focusing on Arduino platform to make home automation
+easier. There is a set of third-party libraries which complements the whole
+library.
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   getting_started
+   hardware
+   bootloader
+   protocol
 
