@@ -47,6 +47,14 @@ stream	      4     Used for OTA firmware updates.
 Message Sub-types
 *****************
 
+
+.. note::
+
+    If you feel that these sub-types don't fit your needs, there are some
+    custom varaibles that you can use. However, you think that people maybe
+    have the same issue, you can modify the liberary and add your variable,
+    then, pull your modifications to the development branch.
+
 Presentation
 ------------
 
@@ -109,11 +117,7 @@ Type	                  Value  Comment	                               Used by
 V_TEMP                    0      Temperature                               S_TEMP, S_HEATER, S_HVAC
 V_HUM                     1      Humidity                                  S_HUM
 V_STATUS                  2      Binary status. 0=off 1=on                 S_LIGHT, S_DIMMER, S_SPRINKLER, S_HVAC, S_HEATER
-V_LIGHT                   2      | *Deprecated* Alias for V_STATUS.        S_LIGHT, S_DIMMER, S_SPRINKLER
-                                 | Light status. 0=off 1=on	
 V_PERCENTAGE              3      Percentage value. 0-100(%)                S_DIMMER
-V_DIMMER                  3      | *Deprecated* Alias for V_PERCENTAGE.    S_DIMMER
-                                 | Dimmer value. 0-100(%)
 V_PRESSURE                4      Atmospheric Pressure                      S_BARO
 V_FORECAST                5      | Whether forecast. One of "stable",      S_BARO
                                  | "sunny", "cloudy", "unstable",
@@ -209,11 +213,16 @@ I_GET_NONCE_RESPONSE      17     Used between sensors for nonce response.
 Stream
 ------
 
-=======================   ====== =========================================
-Type	                  Value  Comment	                              
-=======================   ====== =========================================
-I_BATTERY_LEVEL           0      Use this to report the battery level (in percent 0-100).
-=======================   ====== =========================================
+============================   ====== =========================================
+Type                           Value  Comment	                              
+============================   ====== =========================================
+ST_FIRMWARE_CONFIG_REQUEST     0
+ST_FIRMWARE_CONFIG_RESPONSE    1
+ST_FIRMWARE_REQUEST            2
+ST_FIRMWARE_RESPONSE           3
+ST_SOUND                       4      Used to transfer sound to controller
+ST_IMAGE                       5      Used to transfer image to controller
+============================   ====== =========================================
 
 Examples
 ********
@@ -242,3 +251,10 @@ sensor 7. No ack is requested from destination node.
 ::
 
     13;7;1;0;2;1\n
+
+.. note::
+
+    There are some messages which are processed by the MySensors library.
+    Which means that you don't have to implement an action for them.
+
+    E.g.: I_REBOOT.
