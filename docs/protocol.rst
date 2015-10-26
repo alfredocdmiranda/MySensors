@@ -10,7 +10,7 @@ All commands ends with a newline. The serial commands has the following format:
     <node-id>;<child-sensor-id>;<message-type>;<ack>;<sub-type>;<payload>\n
 
 Message Structure Elements
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+**************************
 
 ================  =======================================================================================================================
 Message Part      Description
@@ -32,7 +32,7 @@ payload           The payload holds the message coming in from sensors or instru
     The NRF24L01+ has a maximum of 32 bytes. The MySensors library (version 1.5) uses 7 bytes for the message header.
 
 Message Types
-^^^^^^^^^^^^^
+*************
 
 ============= ===== ====================================================
 Type	      Value	Comment
@@ -44,8 +44,19 @@ internal	  3     This is a special internal message. See table below for the det
 stream	      4     Used for OTA firmware updates.
 ============= ===== ====================================================
 
-Message Sub-type: Presentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Message Sub-types
+*****************
+
+
+.. note::
+
+    If you feel that these sub-types don't fit your needs, there are some
+    custom varaibles that you can use. However, you think that people maybe
+    have the same issue, you can modify the liberary and add your variable,
+    then, pull your modifications to the development branch.
+
+Presentation
+------------
 
 When a presentation message is sent from a sensor, sub-type can one the following:
 
@@ -95,8 +106,8 @@ S_MOISTURE                35     Moisture sensor                           V_LEV
 =======================   ====== ========================================= ====================
 
 
-Message Sub-type: Set & Req
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Set & Req
+---------
 
 When a set or request message is being sent, the sub-type has to be one of the following:
 
@@ -106,11 +117,7 @@ Type	                  Value  Comment	                               Used by
 V_TEMP                    0      Temperature                               S_TEMP, S_HEATER, S_HVAC
 V_HUM                     1      Humidity                                  S_HUM
 V_STATUS                  2      Binary status. 0=off 1=on                 S_LIGHT, S_DIMMER, S_SPRINKLER, S_HVAC, S_HEATER
-V_LIGHT                   2      | *Deprecated* Alias for V_STATUS.        S_LIGHT, S_DIMMER, S_SPRINKLER
-                                 | Light status. 0=off 1=on	
 V_PERCENTAGE              3      Percentage value. 0-100(%)                S_DIMMER
-V_DIMMER                  3      | *Deprecated* Alias for V_PERCENTAGE.    S_DIMMER
-                                 | Dimmer value. 0-100(%)
 V_PRESSURE                4      Atmospheric Pressure                      S_BARO
 V_FORECAST                5      | Whether forecast. One of "stable",      S_BARO
                                  | "sunny", "cloudy", "unstable",
@@ -173,8 +180,8 @@ V_HVAC_FLOW_MODE          46     | Flow mode for HVAC                      S_HVA
                                  | ("Auto", "ContinuousOn", "PeriodicOn")
 =======================   ====== ========================================= ====================
 
-Message Sub-type: Internal
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Internal
+--------
 
 The internal messages are used for different tasks in the communication between sensors, the gateway to controller and between sensors and the gateway.
 
@@ -203,17 +210,22 @@ I_GET_NONCE               16     Used between sensors when requesting nonce.
 I_GET_NONCE_RESPONSE      17     Used between sensors for nonce response.
 =======================   ====== =========================================
 
-Message Sub-type: Stream
-^^^^^^^^^^^^^^^^^^^^^^^^
+Stream
+------
 
-=======================   ====== =========================================
-Type	                  Value  Comment	                              
-=======================   ====== =========================================
-I_BATTERY_LEVEL           0      Use this to report the battery level (in percent 0-100).
-=======================   ====== =========================================
+============================   ====== =========================================
+Type                           Value  Comment	                              
+============================   ====== =========================================
+ST_FIRMWARE_CONFIG_REQUEST     0
+ST_FIRMWARE_CONFIG_RESPONSE    1
+ST_FIRMWARE_REQUEST            2
+ST_FIRMWARE_RESPONSE           3
+ST_SOUND                       4      Used to transfer sound to controller
+ST_IMAGE                       5      Used to transfer image to controller
+============================   ====== =========================================
 
 Examples
-^^^^^^^^
+********
 
 Received message from radio network from one of the sensors: Incoming presentation
 message from node 12 with child sensor 6. The presentation is for a binary
@@ -239,3 +251,10 @@ sensor 7. No ack is requested from destination node.
 ::
 
     13;7;1;0;2;1\n
+
+.. note::
+
+    There are some messages which are processed by the MySensors library.
+    Which means that you don't have to implement an action for them.
+
+    E.g.: I_REBOOT.
