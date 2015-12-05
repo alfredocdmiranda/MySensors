@@ -103,6 +103,9 @@ S_WATER_LEAK              32     Water leak sensor                         V_TRI
 S_SOUND                   33     Sound sensor                              V_LEVEL(dB), V_TRIPPED, V_ARMED
 S_VIBRATION               34     Vibration sensor                          V_LEVEL(Hz), V_TRIPPED, V_ARMED
 S_MOISTURE                35     Moisture sensor                           V_LEVEL, V_TRIPPED, V_ARMED
+S_INFO                    36     LCD text device                           V_TEXT
+S_GAS                     37     Gas meter                                 V_FLOW, V_VOLUME
+S_GPS                     38     GPS Sensor                                V_POSITION
 =======================   ====== ========================================= ====================
 
 
@@ -178,6 +181,15 @@ V_HVAC_SETPOINT_COOL      44     HVAC cold setpoint                        S_HVA
 V_HVAC_SETPOINT_HEAT      45     HVAC/Heater setpoint                      S_HVAC, S_HEATER
 V_HVAC_FLOW_MODE          46     | Flow mode for HVAC                      S_HVAC
                                  | ("Auto", "ContinuousOn", "PeriodicOn")
+V_TEXT                    47     Text message to display on LCD or         S_INFO
+                                 | controller device
+V_CUSTOM                  48     Custom messages used for controller       S_CUSTOM
+                                 | /inter node specific commands, 
+                                 | preferably using S_CUSTOM device type.
+V_POSITION                49     GPS position and altitude. Payload:       S_GPS
+                                 | latitude;longitude;altitude(m). 
+                                 | E.g. "55.722526;13.017972;18"
+V_IR_RECORD               50     Record IR codes S_IR for playback         S_IR
 =======================   ====== ========================================= ====================
 
 Internal
@@ -208,6 +220,10 @@ I_GATEWAY_READY           14     Send by gateway to controller when startup is c
 I_REQUEST_SIGNING         15     Used between sensors when initialting signing.
 I_GET_NONCE               16     Used between sensors when requesting nonce.
 I_GET_NONCE_RESPONSE      17     Used between sensors for nonce response.
+I_HEARTBEAT               18
+I_PRESENTATION            19
+I_DISCOVER                20
+I_DISCOVER_RESPONSE       21
 =======================   ====== =========================================
 
 Stream
