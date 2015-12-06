@@ -22,6 +22,7 @@ List of controllers
 ^^^^^^^^^^^^^^^^^^^
 
 * `Ago Control <http://www.agocontrol.com/>`_
+* `Calaos <https://calaos.fr/>`_
 * `Domoticz <http://www.domoticz.com/>`_
 * `DomotiGa <https://domotiga.nl/>`_
 * `FHEM <http://www.fhem.de/>`_
@@ -34,6 +35,7 @@ List of controllers
 * `MyController.org <http://mycontroller.org/>`_
 * `MyNetSensors <http://forum.mysensors.org/topic/1984>`_
 * `OpenHAB <http://www.openhab.org/>`_
+* `openLuup <https://github.com/akbooer/openLuup>`_
 * `PiDome <http://pidome.wordpress.com/>`_
 * `Pimatic <http://pimatic.org/>`_
 * `Vera <http://getvera.com/>`_
