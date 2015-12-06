@@ -25,6 +25,7 @@ Contents:
    protocol
    controllers
    nodes
+   api
 
 What's new:
 
