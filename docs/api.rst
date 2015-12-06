@@ -35,25 +35,26 @@ This object will handle incoming and outcoming messages. You must create one
 message for each sensor you have in your node. 
 
 E.g.: 
-- `MyMessage msg1(CHILD_ID, CHILD_TYPE);`
-- `MyMessage msg2();`
+
+- :code:`MyMessage msg1(CHILD_ID, CHILD_TYPE);`
+- :code:`MyMessage msg2();`
 
 Attributes
 ----------
 
-`uint8_t last`
+:code:`uint8_t last`
     
     8 bit - Id of last node this message passed
 
-`uint8_t sender`
+:code:`uint8_t sender`
 
     8 bit - Id of sender node (origin)
 
-`uint8_t destination`
+:code:`uint8_t destination`
     
     8 bit - Id of destination node
 
-`uint8_t version_length`
+:code:`uint8_t version_length`
     
     2 bit - Protocol version
     
@@ -61,7 +62,7 @@ Attributes
     
     5 bit - Length of payload
 
-`uint8_t command_ack_payload`
+:code:`uint8_t command_ack_payload`
     
     3 bit - Command type
     
@@ -71,13 +72,17 @@ Attributes
     
     3 bit - Payload data type
 
-`uint8_t type`
+:code:`uint8_t type`
     
     8 bit - Type varies depending on command
 
-`uint8_t sensor`
+:code:`uint8_t sensor`
 
     8 bit - Id of sensor that this message concerns.
+
+:code:`char data[MAX_PAYLOAD + 1];`
+
+    That is the message's payload
 
 Methods
 -------
