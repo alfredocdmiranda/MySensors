@@ -12,10 +12,18 @@ presentation
 
 :code:`void presentation()`
 
+This function must be implemented (at least present) in your sketch. It will be 
+called at the start of your node and every time your nome receive an 
+I_PRESENTATION.
+
+@params: None
+
+@return: None
+
 receive
 ^^^^^^^
 
-:code:`void receive(const MyMessage &message)`
+:code:`void receive(const MyMessage &msg)`
 
 If you want to handle messages you must implement this function on your sketch. 
 If you don't implement it, you won't be able to handle the messages and they will 
@@ -26,7 +34,21 @@ Then, you will use the MyMessage object to see what is inside the message.
 
 @params:
 
-- message: It takes a reference of a MyMessage that you will to manipulate.
+- msg: It takes a reference of a MyMessage that you will to manipulate.
+
+@return: None
+
+receiveTime
+^^^^^^^^^^^
+
+:code:`void receiveTime(unsigned long time)`
+
+This function will be called every time your node receives time from controller. 
+So if you want to handle it, you must implement this functions.
+
+@params:
+
+- time:
 
 @return: None
 
@@ -39,7 +61,7 @@ It takes the most recent node configuration received from controller
 
 @params: None
 
-@return: ControllerConfig object with all configuration
+@return: ControllerConfig struct with all configuration
 
 getNodeId
 ^^^^^^^^^
@@ -71,6 +93,7 @@ description="", bool ack=false)`
 
 Each node must present all attached sensors before any values can be handled correctly by the controller.
 It is usually good to present all attached sensors after power-up in setup().
+
 @params:
 
 - sensorId: Select a unique sensor id for this sensor. Choose a number between 0-254.
@@ -83,7 +106,16 @@ It is usually good to present all attached sensors after power-up in setup().
 request
 ^^^^^^^
 
-:code:`void request(uint8_t, uint8_t, uint8_t)`
+:code:`void request(uint8_t childSensorId, uint8_t variableType, uint8_t 
+destination=GATEWAY_ADDRESS)`
+
+@params:
+
+- childSensorId: The variable's node's id you want to request.
+- variableType: The type of variable you are requesting.
+- destination: Destination node. The default destination is the Gateway.
+
+@return: None
  
 requestTime
 ^^^^^^^^^^^
@@ -108,8 +140,11 @@ You have 256 bytes to play with. Note that there is a limitation on the number
 of writes the EEPROM can handle (~100 000 cycles on ATMega328).
 
 @params:
+
 - pos: The position to store value in (0-255)
 - value: Value to store in position
+
+@return: None
 
 send
 ^^^^
@@ -191,12 +226,16 @@ Sleep (PowerDownMode) the MCU and radio. Wake up on timer.
 smartSleep
 ^^^^^^^^^^
 
-:code:`void smartSleep(unsigned long)`
+:code:`void smartSleep(unsigned long ms)`
+
+@params:
+
+- ms: Number of milliseconds to sleep.
 
 sleep
 ^^^^^
 
-:code:`bool sleep(uint8_t interrupt, uint8_t mode, unsigned long ms)`
+:code:`bool sleep(uint8_t interrupt, uint8_t mode, unsigned long ms=0)`
 
 Sleep (PowerDownMode) the MCU and radio. Wake up on timer or pin change.
 See: http://arduino.cc/en/Reference/attachInterrupt for details on modes and which pin
@@ -204,7 +243,7 @@ is assigned to what interrupt. On Nano/Pro Mini: 0=Pin2, 1=Pin3
 
 @params:
 
-- interrupt: Interrupt that should trigger the wakeup
+- interrupt: Pin that should trigger the wakeup
 - mode: RISING, FALLING, CHANGE
 - ms: Number of milliseconds to sleep or 0 to sleep forever
 
@@ -214,7 +253,22 @@ it up.
 smartSleep
 ^^^^^^^^^^
 
-:code:`bool smartSleep(uint8_t , uint8_t, unsigned long)`
+:code:`bool smartSleep(uint8_t interrupt, uint8_t mode, unsigned long ms=0)`
+
+@params:
+
+- interrupt: Pin that should trigger the wakeup
+- mode: RISING, FALLING, CHANGE
+- ms: Number of milliseconds to sleep or 0 to sleep forever
+
+@return: True if wake up was triggered by pin change and false means timer woke 
+it up.
+
+sleep
+^^^^^
+
+:code:`int8_t sleep(uint8_t interrupt1, uint8_t mode1, uint8_t interrupt2, 
+uint8_t mode2, unsigned long ms=0)`
 
 Sleep (PowerDownMode) the MCU and radio. Wake up on timer or pin change for two separate interrupts.
 See: http://arduino.cc/en/Reference/attachInterrupt for details on modes and which pin
@@ -223,21 +277,30 @@ is assigned to what interrupt. On Nano/Pro Mini: 0=Pin2, 1=Pin3
 @params:
 
 - interrupt1 First interrupt that should trigger the wakeup
-@param mode1 Mode for first interrupt (RISING, FALLING, CHANGE)
-@param interrupt2 Second interrupt that should trigger the wakeup
-@param mode2 Mode for second interrupt (RISING, FALLING, CHANGE)
-@param ms Number of milliseconds to sleep or 0 to sleep forever
-@return Interrupt number wake up was triggered by pin change and negative if timer woke it up.
+- mode1 Mode for first interrupt (RISING, FALLING, CHANGE)
+- interrupt2 Second interrupt that should trigger the wakeup
+- mode2 Mode for second interrupt (RISING, FALLING, CHANGE)
+- ms Number of milliseconds to sleep or 0 to sleep forever
 
-sleep
-^^^^^
-
-:code:`int8_t sleep(uint8_t, uint8_t, uint8_t, uint8_t, unsigned long)`
+@return: Pin number wake up was triggered by pin change and negative if 
+timer woke it up.
 
 smartSleep
 ^^^^^^^^^^
 
-:code:`int8_t smartSleep(uint8_t, uint8_t, uint8_t, uint8_t, unsigned long)`
+:code:`int8_t smartSleep(uint8_t interrupt1, uint8_t mode1, uint8_t interrupt2, 
+uint8_t mode2, unsigned long ms=0)`
+
+@params:
+
+- interrupt1 First interrupt that should trigger the wakeup
+- mode1 Mode for first interrupt (RISING, FALLING, CHANGE)
+- interrupt2 Second interrupt that should trigger the wakeup
+- mode2 Mode for second interrupt (RISING, FALLING, CHANGE)
+- ms Number of milliseconds to sleep or 0 to sleep forever
+
+@return: Pin number wake up was triggered by pin change and negative if 
+timer woke it up.
 
 wait
 ^^^^
@@ -317,8 +380,82 @@ Attributes
 Methods
 -------
 
-uint8_t getCommand()
-~~~~~~~~~~~~~~~~~~~~
+getCommand
+~~~~~~~~~~
 
-bool isAck()
-~~~~~~~~~~~~
+:code:`uint8_t getCommand()`
+
+@params: None
+
+@return: It returns the value of command (type of message). E.g.: 
+C_SET, C_REQ, ...
+
+isAck
+~~~~~
+
+:code:`bool isAck()`
+
+@params: None
+
+@return: It return if it is an ack or not.
+
+set
+~~~
+
+:code:`MyMessage& set(void* payload, uint8_t length)`
+
+:code:`MyMessage& set(const char* value)`
+
+:code:`MyMessage& set(float value, uint8_t decimals)`
+
+:code:`MyMessage& set(uint8_t value)`
+
+:code:`MyMessage& set(uint32_t value)`
+
+:code:`MyMessage& set(int32_t value)`
+
+:code:`MyMessage& set(uint16_t value)`
+
+:code:`MyMessage& set(int16_t value)`
+
+@params:
+
+- payload:
+- length:
+- value:
+- decimals:
+
+@return: It returns a reference to your MyMessage object.
+
+setDestination
+~~~~~~~~~~~~~~
+
+:code:`MyMessage& setDestination(uint8_t destination)`
+
+@params:
+
+- destination
+
+@return: It returns a reference to your MyMessage object.
+
+setSensor
+~~~~~~~~~
+
+:code:`MyMessage& setSensor(uint8_t sensor)`
+
+@params:
+
+- sensor
+
+@return: It returns a reference to your MyMessage object.
+
+setType
+~~~~~~~
+
+:code:`MyMessage& setType(uint8_t type)`
+
+@params:
+
+- type
+
+@return: It returns a reference to your MyMessage object.
