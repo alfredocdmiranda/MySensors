@@ -70,7 +70,7 @@ getNodeId
 
 @params: None
 
-@return: The node's id
+@return: Node's id
 
 loadState
 ^^^^^^^^^
@@ -81,9 +81,9 @@ Load a state (from local EEPROM).
 
 @params:
 
-- pos: The position to fetch value from  (0-255)
+- pos: The position to fetch value from  0 to 255
 
-@return: Value to store in position
+@return: Value that was stored in position
 
 present
 ^^^^^^^
@@ -103,11 +103,15 @@ It is usually good to present all attached sensors after power-up in setup().
   Default is not to request any ack.
 - description: A textual description of the sensor.
 
+@return: None
+
 request
 ^^^^^^^
 
 :code:`void request(uint8_t childSensorId, uint8_t variableType, uint8_t 
 destination=GATEWAY_ADDRESS)`
+
+It sends an requesting package.
 
 @params:
 
@@ -141,7 +145,7 @@ of writes the EEPROM can handle (~100 000 cycles on ATMega328).
 
 @params:
 
-- pos: The position to store value in (0-255)
+- pos: The position to store value in 0 to 255
 - value: Value to store in position
 
 @return: None
@@ -324,13 +328,11 @@ Objects
 MyMessage
 ^^^^^^^^^
 
+:code:`MyMessage msg1(CHILD_ID, CHILD_TYPE);`
+:code:`MyMessage msg2();`
+
 This object will handle incoming and outcoming messages. You must create one 
 message for each sensor you have in your node. 
-
-E.g.: 
-
-- :code:`MyMessage msg1(CHILD_ID, CHILD_TYPE);`
-- :code:`MyMessage msg2();`
 
 Attributes
 ----------
@@ -418,11 +420,14 @@ set
 
 :code:`MyMessage& set(int16_t value)`
 
+This function set the message's payload. There are a lot of overwritten in this 
+function, which allow you to send many types of value.
+
 @params:
 
 - payload:
 - length:
-- value:
+- value: 
 - decimals:
 
 @return: It returns a reference to your MyMessage object.
@@ -431,6 +436,8 @@ setDestination
 ~~~~~~~~~~~~~~
 
 :code:`MyMessage& setDestination(uint8_t destination)`
+
+It sets the destination of the package.
 
 @params:
 
@@ -443,6 +450,8 @@ setSensor
 
 :code:`MyMessage& setSensor(uint8_t sensor)`
 
+It sets the sensor's id which will be send on the protocol header.
+
 @params:
 
 - sensor
@@ -453,6 +462,8 @@ setType
 ~~~~~~~
 
 :code:`MyMessage& setType(uint8_t type)`
+
+It sets the sensor's type which will be send on the protocol header.
 
 @params:
 
