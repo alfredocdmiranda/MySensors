@@ -12,7 +12,7 @@ library.
 If you don't find what you want in this page, you always can go to the `MySensors' official
 website <http://www.mysensors.org/>`_ and its `Forum <http://forum.mysensors.org/>`_
 
-Porotocol version 1.6
+Protocol version 1.6
 
 Contents:
 
@@ -25,6 +25,7 @@ Contents:
    protocol
    controllers
    nodes
+   security
    api
 
 What's new:
